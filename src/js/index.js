@@ -43,6 +43,9 @@ function Choice(Message){
     if(cookies["name"] == null){ //if name doesn't exist
         cookies["name"] = ""; //name is nothing
     }
+
+    InitialHTML+= '<body class="text-center">'
+    InitialHTML+= '<h1>Pick your Level</h1>'
     if(Message == null){ //if this is the first time playing the game since page loaded
         InitialHTML+= 'Name: <input type="text" id="InpName" value="' + cookies["name"] + '"><p></p>'; //allows the user to input their name
     }else{
@@ -55,9 +58,10 @@ function Choice(Message){
         }
     }
     for(var x = 1; x < parseInt(cookies["Level"]); x++){ //iterates through all the levels before your current level
-        InitialHTML+= '<button type="button" class="btn btn-info" onclick="window.Start(' + x + ')">Level ' + x + '</button> You achieved the highest score of ' + cookies[x] + '<p></p>'; //displays button for level selection
+        InitialHTML+= '<button type="button" class="btn btn-info" onclick="window.Start(' + x + ')">Level ' + x + '</button> You achieved the highest score of ' + parseInt(cookies[x] / 10000) + '<p></p>'; //displays button for level selection
     }
     InitialHTML+= '<button type="button" onclick="window.Start(' + (parseInt(x)) + ')">Level ' + (parseInt(x)) + '</button>'; //displays button to play current level (button looks different to the others)
+    InitialHTML+= '</body>'
     document.write(InitialHTML); //writes all the html
     document.close(); //html has finished loading
 }
@@ -599,7 +603,7 @@ function MainFunc(){
                 document.cookie = cookie.serialize(level, score);
             }
             var cookies = cookie.parse(document.cookie);
-            str = "<p>" + cookies["name"] + ", you achieved, on the current level of " + level + ", a score of " + score + "</p>";
+            str = "<p>" + cookies["name"] + ", you achieved, on the current level of " + level + ", a score of " + parseInt(score / 10000) + "</p>";
             end = true;
             Choice(str + "<p></p>");
         }
